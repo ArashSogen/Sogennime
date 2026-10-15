@@ -1,0 +1,13 @@
+services:
+  sogenime:
+    build: .
+    container_name: sogenime
+    restart: unless-stopped
+    ports:
+      - "8070:8070"
+    environment:
+      - PORT=8070
+      - NODE_ENV=production
+    volumes:
+      # Mount your host VPS Google Drive or anime folder
+      - /mnt/gdrive:/mnt/gdrive:ro

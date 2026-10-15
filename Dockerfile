@@ -3,9 +3,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json tsconfig.json vite.config.ts index.html ./
+# Copy configuration files and dependencies
+COPY package*.json tsconfig.json vite.config.ts index.html firebase-applet-config.json* ./
 RUN npm install --legacy-peer-deps
 
+# Copy source code and build production bundle
 COPY src/ ./src/
 RUN npm run build
 
@@ -23,7 +25,7 @@ RUN npm install --omit=dev --legacy-peer-deps && npm install tsx --legacy-peer-d
 
 COPY --from=builder /app/dist ./dist
 COPY server.ts ./
-COPY firebase-applet-config.json ./
+COPY firebase-applet-config.json* ./
 
 EXPOSE 8070
 
